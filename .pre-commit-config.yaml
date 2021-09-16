@@ -1,0 +1,51 @@
+fail_fast: true
+repos:
+  - repo: local
+    hooks:
+      - id: cz
+        stages: [commit-msg]
+        name: Check Commit Message
+        entry: poetry run cz check --commit-msg-file
+        language: system
+        pass_filenames: true
+        always_run: true
+
+      - id: isort
+        stages: [push]
+        name: Check Imports
+        entry: poetry run isort --profile black --check --diff --virtual-env .venv .
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: black
+        stages: [push]
+        name: Check Code Formatting
+        entry: poetry run black --check --diff .
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: mypy
+        stages: [push]
+        name: Check static typings
+        entry: poetry run mypy -p birthday_wisher
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: pylint
+        stages: [push]
+        name: Lint
+        entry: poetry run pylint --rcfile=.pylintrc birthday_wisher
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: tests
+        stages: [push]
+        name: Run tests
+        entry: poetry run python -m pytest tests
+        language: system
+        pass_filenames: false
+        always_run: true
