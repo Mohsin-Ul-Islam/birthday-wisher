@@ -26,7 +26,7 @@ class TestBirthdayWisher(TestCase):
         ]
 
     def test_version(self):
-        assert __version__ == "0.1.0"
+        assert __version__ == "1.0.0"
 
     def test_wisher_wishes_on_birthday(self) -> None:
 
