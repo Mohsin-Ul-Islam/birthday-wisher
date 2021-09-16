@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "birthday-wisher"
+version = "0.1.0"
+description = ""
+authors = ["Mohsin-Ul-Islam <mohsinulislam180@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Flask = "^2.0.1"
+twilio = "^6.63.2"
+google-cloud-datastore = "^2.1.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^21.9b0"
+mypy = "^0.910"
+isort = "^5.9.3"
+pylint = "^2.11.0"
+pre-commit = "^2.15.0"
+commitizen = "^2.18.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
