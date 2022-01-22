@@ -25,6 +25,8 @@ jobs:
           key: ${{ runner.os }}-pants-cache-
           restore-keys: |
             ${{ runner.os }}-pants-cache-
+            ${{ runner.os }}-pants-
+            ${{ runner.os }}-
 
       - name: Lint build files
         run: ./pants update-build-files --check
