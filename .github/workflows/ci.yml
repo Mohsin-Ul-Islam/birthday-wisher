@@ -60,5 +60,5 @@ jobs:
           echo "::set-output name=exists::$(test -f dist/birthday_wisher/cloud_function.zip)"
 
       - name: Deploy cloud function to Google Cloud
-        if: steps.build-artifacts.outputs.exists == "0"
+        if: steps.build-artifacts.outputs.exists == 0
         run: gcloud functions deploy --name birthday-wisher --runtime python38 --entrypoint main:handler --trigger-http dist/birthday_wisher/cloud_function.zip
