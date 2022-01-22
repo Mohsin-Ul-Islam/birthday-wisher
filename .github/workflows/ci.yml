@@ -10,6 +10,9 @@ jobs:
     name: ci
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Cache Pants
         uses: actions/cache@v2
         with:
@@ -18,9 +21,6 @@ jobs:
             ~/.cache/pants/lmdb_store
             ~/.cache/pants/named_caches
           key: ${{ runner.os }}-pants-cache
-
-      - name: Checkout Code
-        uses: actions/checkout@v2
 
       - name: Lint build files
         run: ./pants update-build-files --check
@@ -47,7 +47,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
         with:
-          service_account: ${{ secrets.GC_SERVICE_ACCOUNT }}
+          credentials_json: ${{ secrets.GC_SERVICE_ACCOUNT }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
