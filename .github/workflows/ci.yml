@@ -31,13 +31,16 @@ jobs:
         run: ./pants tailor --check
 
       - name: Lint
-        run: ./pants lint ::
+        run: |
+          ./pants lint ::
       
       - name: Typecheck
-        run: ./pants check ::
+        run: |
+          ./pants check ::
       
       - name: Test
-        run: ./pants test --use-coverage ::
+        run: |
+          ./pants test --use-coverage ::
 
       - name: Package
         run: |
