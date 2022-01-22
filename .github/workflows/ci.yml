@@ -20,7 +20,9 @@ jobs:
             ~/.cache/pants/setup
             ~/.cache/pants/lmdb_store
             ~/.cache/pants/named_caches
-          key: ${{ runner.os }}-pants-cache
+          key: ${{ runner.os }}-pants-cache-
+          restore-keys:
+            - ${{ runner.os }}-pants-cache-
 
       - name: Lint build files
         run: ./pants update-build-files --check
@@ -54,8 +56,9 @@ jobs:
 
       - id: build-artifacts
         name: Check Build Artifacts
-        run: test -f dist/birthday_wisher/cloud_function.zip
+        run: |
+          echo "::set-output name=exists::$(test -f dist/birthday_wisher/cloud_function.zip)"
 
       - name: Deploy cloud function to Google Cloud
-        if: steps.build-artifacts == 0
+        if: steps.build-artifacts.output.exists == "0"
         run: gcloud functions deploy --name birthday-wisher --runtime python38 --entrypoint main:handler --trigger-http dist/birthday_wisher/cloud_function.zip
