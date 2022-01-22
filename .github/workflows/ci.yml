@@ -58,9 +58,8 @@ jobs:
       - id: build-artifacts
         name: Check Build Artifacts
         run: |
-          echo "::set-output name=exists::$(test -f dist/birthday_wisher/cloud_function.zip)"
+          echo ::set-output name=exists::$(test -f dist/birthday_wisher/cloud_function.zip)
 
       - name: Deploy cloud function to Google Cloud
-        # if: steps.build-artifacts.outputs.exists == '0'
-        run: echo ${{ steps.build-artifacts.outputs.exists }}
-        # run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point main:handler --trigger-http --source dist/birthday_wisher
+        if: steps.build-artifacts.outputs.exists == '0'
+        run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point main:handler --trigger-http --source dist/birthday_wisher
