@@ -62,4 +62,4 @@ jobs:
 
       - name: Deploy cloud function to Google Cloud
         if: hashFiles('dist/birthday_wisher/cloud_function.zip') != ''
-        run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point main:handler --trigger-http --source dist/birthday_wisher
+        run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point handler --trigger-http --source dist/birthday_wisher

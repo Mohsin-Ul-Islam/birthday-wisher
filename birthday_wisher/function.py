@@ -9,10 +9,7 @@ from birthday_wisher.user import User
 from birthday_wisher.wisher import Wisher
 
 
-def handler(request: Request) -> Response:
-
-    if request.headers.get("User-Agent") is None:
-        return Response(response="Forbidden", status=403)
+def handler(_: Request) -> Response:
 
     notifier = TwilioSMSUserNotifier(Environment())
     template = """
