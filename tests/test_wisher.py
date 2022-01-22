@@ -29,7 +29,7 @@ def users() -> List[User]:
 
 
 def test_version():
-    expect(__version__).to(equal("1.0.0"))
+    expect(__version__).to(equal("1.0.1"))
 
 
 def test_wisher_wishes_on_birthday() -> None:

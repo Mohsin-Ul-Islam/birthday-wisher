@@ -234,6 +234,20 @@ libcst = ">=0.2.5"
 proto-plus = ">=1.4.0"
 
 [[package]]
+name = "google-cloud-secret-manager"
+version = "2.8.0"
+description = "Secret Manager API API client library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+google-api-core = {version = ">=1.28.0,<3.0.0dev", extras = ["grpc"]}
+grpc-google-iam-v1 = ">=0.12.3,<0.13dev"
+libcst = ">=0.2.5"
+proto-plus = ">=1.4.0"
+
+[[package]]
 name = "googleapis-common-protos"
 version = "1.53.0"
 description = "Common protobufs used in Google APIs"
@@ -242,10 +256,23 @@ optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
+grpcio = {version = ">=1.0.0", optional = true, markers = "extra == \"grpc\""}
 protobuf = ">=3.12.0"
 
 [package.extras]
 grpc = ["grpcio (>=1.0.0)"]
+
+[[package]]
+name = "grpc-google-iam-v1"
+version = "0.12.3"
+description = "GRPC library for the google-iam-v1 service"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+googleapis-common-protos = {version = ">=1.5.2,<2.0.0dev", extras = ["grpc"]}
+grpcio = ">=1.0.0,<2.0.0dev"
 
 [[package]]
 name = "grpcio"
@@ -682,7 +709,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "12d08356fd09a289450c4119cb8fd57a8cf28defba744acdd34f19ff8e02d97b"
+content-hash = "b13f994744db54ffca3f9ca0fe25a90d32901c7e948682b138048cc20cc06230"
 
 [metadata.files]
 argcomplete = [
@@ -764,9 +791,16 @@ google-cloud-datastore = [
     {file = "google-cloud-datastore-2.1.6.tar.gz", hash = "sha256:df53c11d69d4d0a6d7f3298587bf9d3f4b956cce8159ec5d6ae98c5506c13baa"},
     {file = "google_cloud_datastore-2.1.6-py2.py3-none-any.whl", hash = "sha256:3ed4f3e3963beedcaa3ab9bb55ddff86780b2af18772e941e9d52daa4d158f9d"},
 ]
+google-cloud-secret-manager = [
+    {file = "google-cloud-secret-manager-2.8.0.tar.gz", hash = "sha256:e8a3fb7c2a1595f59923661c568667d1ba40fcaaa4dd55fe8b1f5e54871e9460"},
+    {file = "google_cloud_secret_manager-2.8.0-py2.py3-none-any.whl", hash = "sha256:af6a8f3aeb5939020cd71deafbbb21744d74b988cef8e0690ebff828302ce13f"},
+]
 googleapis-common-protos = [
     {file = "googleapis-common-protos-1.53.0.tar.gz", hash = "sha256:a88ee8903aa0a81f6c3cec2d5cf62d3c8aa67c06439b0496b49048fb1854ebf4"},
     {file = "googleapis_common_protos-1.53.0-py2.py3-none-any.whl", hash = "sha256:f6d561ab8fb16b30020b940e2dd01cd80082f4762fa9f3ee670f4419b4b8dbd0"},
+]
+grpc-google-iam-v1 = [
+    {file = "grpc-google-iam-v1-0.12.3.tar.gz", hash = "sha256:0bfb5b56f648f457021a91c0df0db4934b6e0c300bd0f2de2333383fe958aa72"},
 ]
 grpcio = [
     {file = "grpcio-1.40.0-cp35-cp35m-macosx_10_10_intel.whl", hash = "sha256:6f8f581787e739945e6cda101f312ea8a7e7082bdbb4993901eb828da6a49092"},

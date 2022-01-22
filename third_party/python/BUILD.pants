@@ -1,1 +1,1 @@
-poetry_requirements()
+poetry_requirements(module_mapping={"google": ["google-cloud-secretmanager", "google-cloud-exceptions"]})
