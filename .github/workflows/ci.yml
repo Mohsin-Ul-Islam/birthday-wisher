@@ -44,7 +44,7 @@ jobs:
 
       - name: Package
         run: |
-        ./pants "--changed-since=HEAD --changed-dependees=transitive filter --target-type=python_google_cloud_function | xargs ./pants package"
+          ./pants --changed-since=HEAD --changed-dependees=transitive filter --target-type=python_google_cloud_function | xargs ./pants package
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
