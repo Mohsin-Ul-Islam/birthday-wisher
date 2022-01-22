@@ -13,8 +13,7 @@ repos:
       - id: update-build-files
         stages: [push]
         name: Check build files
-        entry: |
-          ./pants update-build-files --check | echo 1
+        entry: ./pants update-build-files --check
         language: system
         pass_filenames: false
         always_run: true
