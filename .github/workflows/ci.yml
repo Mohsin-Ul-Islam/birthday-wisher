@@ -44,7 +44,7 @@ jobs:
 
       - name: Package
         run: |
-          ./pants --changed-since=HEAD --changed-dependees=transitive filter --target-type=python_google_cloud_function | xargs ./pants package
+          ./pants --changed-since=HEAD~1 --changed-dependees=transitive filter --target-type=python_google_cloud_function | xargs ./pants package
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
@@ -61,4 +61,4 @@ jobs:
 
       - name: Deploy cloud function to Google Cloud
         if: steps.build-artifacts.outputs.exists == 0
-        run: gcloud functions deploy --name birthday-wisher --runtime python38 --entrypoint main:handler --trigger-http dist/birthday_wisher/cloud_function.zip
+        run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point main:handler --trigger-http dist/birthday_wisher/cloud_function.zip
