@@ -16,17 +16,14 @@ jobs:
           fetch-depth: 2
 
       - name: Cache Pants
+        id: cache-pants
         uses: actions/cache@v2
         with:
           path: |
             ~/.cache/pants/setup
             ~/.cache/pants/lmdb_store
             ~/.cache/pants/named_caches
-          key: ${{ runner.os }}-pants-cache-
-          restore-keys: |
-            ${{ runner.os }}-pants-cache-
-            ${{ runner.os }}-pants-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-
 
       - name: Lint build files
         run: ./pants update-build-files --check
@@ -64,5 +61,5 @@ jobs:
           echo "::set-output name=exists::$(test -f dist/birthday_wisher/cloud_function.zip)"
 
       - name: Deploy cloud function to Google Cloud
-        if: steps.build-artifacts.outputs.exists == 0
+        if: steps.build-artifacts.outputs.exists == '0'
         run: gcloud functions deploy birthday-wisher --runtime python38 --entry-point main:handler --trigger-http --source dist/birthday_wisher
