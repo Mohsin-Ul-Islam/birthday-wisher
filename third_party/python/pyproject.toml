@@ -11,13 +11,10 @@ twilio = "^6.63.2"
 google-cloud-datastore = "^2.1.6"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
-black = "^21.9b0"
-mypy = "^0.910"
-isort = "^5.9.3"
-pylint = "^2.11.0"
 pre-commit = "^2.15.0"
 commitizen = "^2.18.1"
+expects = "^0.9.0"
+pytest = "^6.2.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -5,47 +5,50 @@ repos:
       - id: cz
         stages: [commit-msg]
         name: Check Commit Message
-        entry: poetry run cz check --commit-msg-file
+        entry: cz check --commit-msg-file
         language: system
         pass_filenames: true
         always_run: true
 
-      - id: isort
+      - id: update-build-files
         stages: [push]
-        name: Check Imports
-        entry: poetry run isort --profile black --check --diff --virtual-env .venv .
+        name: Check build files
+        entry: ./pants update-build-files --check
         language: system
         pass_filenames: false
         always_run: true
 
-      - id: black
+      - id: tailor
         stages: [push]
-        name: Check Code Formatting
-        entry: poetry run black --check --diff .
+        name: Tailor build files
+        entry: ./pants tailor --check
         language: system
         pass_filenames: false
         always_run: true
 
-      - id: mypy
+      - id: lint
         stages: [push]
-        name: Check static typings
-        entry: poetry run mypy -p birthday_wisher
+        name: Check lint
+        entry: |
+          ./pants lint ::
         language: system
         pass_filenames: false
         always_run: true
 
-      - id: pylint
+      - id: check
         stages: [push]
-        name: Lint
-        entry: poetry run pylint --rcfile=.pylintrc birthday_wisher
+        name: Check static typing
+        entry: |
+          ./pants check ::
         language: system
         pass_filenames: false
         always_run: true
 
-      - id: tests
+      - id: test
         stages: [push]
         name: Run tests
-        entry: poetry run python -m pytest tests
+        entry: |
+          ./pants test --use-coverage ::
         language: system
         pass_filenames: false
         always_run: true

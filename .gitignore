@@ -1,6 +1,17 @@
+# Any build or distributions
 dist
+build
+
+# Poetry virtual environment
 .venv
+
+# Cache files & directories
 __pycache__
 .mypy_cache
 .pytest_cache
-.vscode
+
+# Pants workspace files
+/.pants.d/
+/dist/
+/.pids
+/.pants.workdir.file_lock*

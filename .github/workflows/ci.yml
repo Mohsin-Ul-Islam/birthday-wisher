@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pants
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pants/setup
+            ~/.cache/pants/lmdb_store
+            ~/.cache/pants/named_caches
+          key: ${{ runner.os }}-pants-cache
+
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Lint build files
+        run: ./pants update-build-files --check
+      
+      - name: Tailor build files
+        run: ./pants tailor --check
+
+      - name: Lint
+        run: ./pants lint ::
+      
+      - name: Typecheck
+        run: ./pants check ::
+      
+      - name: Test
+        run: ./pants test --use-coverage ::
+
+      - name: Package
+        run: |
+        ./pants --changed-since=HEAD --changed-dependees=transitive filter --target-type=python_google_cloud_function | xargs ./pants package
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          service_account: ${{ secrets.GC_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - id: build-artifacts
+        name: Check Build Artifacts
+        run: test -f dist/birthday_wisher/cloud_function.zip
+
+      - name: Deploy cloud function to Google Cloud
+        if: steps.build-artifacts == 0
+        run: gcloud functions deploy --name birthday-wisher --runtime python38 --entrypoint main:handler --trigger-http dist/birthday_wisher/cloud_function.zip

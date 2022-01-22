@@ -1,28 +1,28 @@
 from __future__ import annotations
 
-from datetime import date, timedelta
-from typing import List
-
-from birthday_wisher import Celebrant, Notifier
+from birthday_wisher.notifier import UserNotifier
+from birthday_wisher.user import User
 
 
 class Wisher:
     def __init__(
-        self, celebrants: List[Celebrant], msg_format: str, notifier: Notifier
+        self,
+        template: str,
+        users: list[User],
+        notifier: UserNotifier,
     ) -> None:
-        self._celebrants = celebrants
-        self._msg_format = msg_format
-        self._notifier = notifier
+        self.users = users
+        self.notifier = notifier
+        self.template = template
 
     def wish_all(self) -> None:
 
-        for celebrant in self._celebrants:
-            if self._has_birthday_today(celebrant):
-                self._notifier.notify(celebrant, self._msg_format)
+        for user in self._users_having_birthdays:
+            self._wish_birthday_to(user)
 
-    def _has_birthday_today(self, celebrant: Celebrant) -> bool:
+    @property
+    def _users_having_birthdays(self) -> list[User]:
+        return [user for user in self.users if user.has_birthday]
 
-        today = date.today() + timedelta(hours=9)
-        birthdate = celebrant["date_of_birth"].date()
-
-        return today.day == birthdate.day and today.month == birthdate.month
+    def _wish_birthday_to(self, user: User) -> None:
+        self.notifier.notify(user, self.template.format_map(user.asdict))

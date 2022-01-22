@@ -1,0 +1,36 @@
+[GLOBAL]
+pants_version = "2.9.0"
+backend_packages = [
+    "pants.backend.python",
+    "pants.backend.python.lint.black",
+    "pants.backend.python.lint.isort",
+    "pants.backend.python.lint.bandit",
+    "pants.backend.python.lint.pylint",
+    "pants.backend.python.lint.flake8",
+    "pants.backend.python.typecheck.mypy",
+    "pants.backend.python.lint.docformatter",
+    "pants.backend.google_cloud_function.python",
+    "pants.backend.experimental.python.lint.autoflake",
+    "pants.backend.experimental.python.lint.pyupgrade",
+]
+
+[anonymous-telemetry]
+enabled = true
+repo_id = "f33fd1d3-1f61-46db-809f-7fe95a174af1"
+
+[python]
+interpreter_constraints = ["CPython>=3.8"]
+requirement_constraints = "third_party/python/constraints.txt"
+
+[mypy]
+config = "build_support/python/mypy.ini"
+
+[isort]
+config = "build_support/python/isort.cfg"
+
+[pylint]
+config = "build_support/python/pylint.ini"
+
+[coverage-py]
+fail_under = 100
+config = "build_support/python/coverage.ini"

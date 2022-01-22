@@ -1,0 +1,8 @@
+python_sources()
+
+python_google_cloud_function(
+    name="cloud_function",
+    runtime="python38",
+    type="http",
+    handler="birthday_wisher.function:handler",
+)
